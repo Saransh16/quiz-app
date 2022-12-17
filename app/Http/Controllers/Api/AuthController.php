@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
@@ -22,7 +23,28 @@ class AuthController extends Controller
             'password' => Hash::make($inputs['password'])            
         ]);
 
-        return response()->success(['message' => 'User registered successfully.', 'user' => $user]);
+        $token = $user->createToken('personal_access_token')->plainTextToken;
+
+        return response()->success(['user' => $user, 'access_token' => $token]);
+    }
+
+    public function login(LoginRequest $request)
+    {
+        $inputs = $request->validated();
+
+        $field = filter_var($inputs['login'], FILTER_VALIDATE_EMAIL) ? 'email' : 'user_name';
+
+        $user = User::where($field, $inputs['login'])->first();
+ 
+        if (! $user || ! Hash::check($inputs['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
+        }
+
+        $token = $user->createToken('personal_access_token')->plainTextToken;
+
+        return response()->success(['user' => $user, 'access_token' => $token]);
     }
 
     private function getUserName()
