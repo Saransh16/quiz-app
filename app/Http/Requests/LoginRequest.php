@@ -28,4 +28,16 @@ class LoginRequest extends FormRequest
             'password' => 'required'
         ];
     }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'login.required' => 'Email or username is required.',
+        ];
+    }    
 }
