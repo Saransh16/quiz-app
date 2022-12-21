@@ -93,12 +93,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.authUser = _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].getters.getAuthUser;
+    console.log(this.authUser);
   },
   data: function data() {
     return {
-      authUser: {
-        full_name: ""
-      },
+      authUser: {},
       alert: {
         show: false,
         title: '',
@@ -575,7 +574,7 @@ var render = function render() {
     staticClass: "flex-1 min-w-0"
   }, [_c("h1", {
     staticClass: "text-2xl font-semibold text-gray-900"
-  }, [_vm._v("Welcome " + _vm._s(_vm.authUser.name))])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Welcome " + _vm._s(_vm.authUser.full_name))])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-2 mx-auto px-4 sm:px-6 md:px-8 border border-gray-300"
   }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("Toast", {
     attrs: {
@@ -594,13 +593,25 @@ var staticRenderFns = [function () {
   var _vm = this,
     _c = _vm._self._c;
   return _c("div", {
-    staticClass: "bg-white shadow overflow-hidden sm:rounded-md mx-12 my-12"
-  }, [_c("ul", {
-    staticClass: "divide-y divide-gray-200",
+    staticClass: "flex justify-center mx-auto px-4 sm:px-6 md:px-8 h-full mt-12"
+  }, [_c("div", [_c("div", {
+    staticClass: "text-2xl text-center font-bold tracking-tight text-gray-700"
+  }, [_vm._v("\n                    Quiz Instructions\n                ")]), _vm._v(" "), _c("li", {
+    staticClass: "mt-4 text-md text-left text-gray-500"
+  }, [_vm._v("\n                    The quizzes consists of questions carefully designed to help you self-assess \n                    your comprehension of the information presented on the topics covered in the module.                         \n                ")]), _vm._v(" "), _c("li", {
+    staticClass: "mt-2 text-md text-left text-gray-500"
+  }, [_vm._v("\n                    Anyone suspected by an official of cheating will be disqualified. You must not use any mobile device during\n                    a quiz competition.                    \n                ")]), _vm._v(" "), _c("li", {
+    staticClass: "mt-2 text-md text-left text-gray-500"
+  }, [_vm._v("\n                    Any kind of written or printed material is not allowed. \n                ")]), _vm._v(" "), _c("li", {
+    staticClass: "mt-2 text-md text-left text-gray-500"
+  }, [_vm._v("\n                    No data will be collected on the website regarding your responses or how many times you take the quiz.                    \n                ")]), _vm._v(" "), _c("div", {
+    staticClass: "mt-16 text-center"
+  }, [_c("button", {
+    staticClass: "inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2",
     attrs: {
-      role: "list"
+      type: "button"
     }
-  })]);
+  }, [_vm._v("\n                        Start Quiz\n                    ")])])])]);
 }];
 render._withStripped = true;
 

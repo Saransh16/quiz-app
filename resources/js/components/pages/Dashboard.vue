@@ -5,17 +5,39 @@
 
             <div class="mx-auto px-4 sm:px-6 md:px-8 flex justify-between">
                 <div class="flex-1 min-w-0">
-                    <h1 class="text-2xl font-semibold text-gray-900">Welcome {{authUser.name}}</h1>
+                    <h1 class="text-2xl font-semibold text-gray-900">Welcome {{authUser.full_name}}</h1>
                 </div>
             </div>
             
             <div class="mt-2 mx-auto px-4 sm:px-6 md:px-8 border border-gray-300"></div>
 
-            <div class="bg-white shadow overflow-hidden sm:rounded-md mx-12 my-12">
-                <ul role="list" class="divide-y divide-gray-200">
-
-                </ul>
+            <div class="flex justify-center mx-auto px-4 sm:px-6 md:px-8 h-full mt-12">
+                <div>
+                    <div class="text-2xl text-center font-bold tracking-tight text-gray-700">
+                        Quiz Instructions
+                    </div>
+                    <li class="mt-4 text-md text-left text-gray-500">
+                        The quizzes consists of questions carefully designed to help you self-assess 
+                        your comprehension of the information presented on the topics covered in the module.                         
+                    </li>
+                    <li class="mt-2 text-md text-left text-gray-500">
+                        Anyone suspected by an official of cheating will be disqualified. You must not use any mobile device during
+                        a quiz competition.                    
+                    </li>
+                    <li class="mt-2 text-md text-left text-gray-500">
+                        Any kind of written or printed material is not allowed. 
+                    </li>
+                    <li class="mt-2 text-md text-left text-gray-500">
+                        No data will be collected on the website regarding your responses or how many times you take the quiz.                    
+                    </li>
+                    <div class="mt-16 text-center">
+                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                            Start Quiz
+                        </button>
+                    </div>                    
+                </div>
             </div>
+
         </main>
         <Toast 
             :show="alert.show" 
@@ -38,12 +60,11 @@ export default {
     }, 
     mounted() {
         this.authUser = store.getters.getAuthUser;
+        console.log(this.authUser);
     },
     data: () => {
         return {
-            authUser: {
-                full_name: ""
-            },
+            authUser: {},
             alert: {
                 show: false,
                 title: '',
