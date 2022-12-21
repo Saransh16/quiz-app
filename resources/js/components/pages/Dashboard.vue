@@ -5,7 +5,8 @@
 
             <div class="mx-auto px-4 sm:px-6 md:px-8 flex justify-between">
                 <div class="flex-1 min-w-0">
-                    <h1 class="text-2xl font-semibold text-gray-900">Welcome {{authUser.full_name}}</h1>
+                    <h1 class="text-2xl font-semibold text-gray-900">Welcome {{authUser.full_name}}, Hope you are doing well!</h1>
+                    <h2 class="text-xl font-semibold text-gray-900">All the best for your exam.</h2>
                 </div>
             </div>
             

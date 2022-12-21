@@ -574,7 +574,9 @@ var render = function render() {
     staticClass: "flex-1 min-w-0"
   }, [_c("h1", {
     staticClass: "text-2xl font-semibold text-gray-900"
-  }, [_vm._v("Welcome " + _vm._s(_vm.authUser.full_name))])])]), _vm._v(" "), _c("div", {
+  }, [_vm._v("Welcome " + _vm._s(_vm.authUser.full_name) + ", Hope you are doing well!")]), _vm._v(" "), _c("h2", {
+    staticClass: "text-xl font-semibold text-gray-900"
+  }, [_vm._v("All the best for your exam.")])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-2 mx-auto px-4 sm:px-6 md:px-8 border border-gray-300"
   }), _vm._v(" "), _vm._m(0)]), _vm._v(" "), _c("Toast", {
     attrs: {
