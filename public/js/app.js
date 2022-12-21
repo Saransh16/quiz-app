@@ -203,16 +203,26 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _services_QuestionService_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/QuestionService.js */ "./resources/js/services/QuestionService.js");
+/* harmony import */ var _components_partials_Toast__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/components/partials/Toast */ "./resources/js/components/partials/Toast.vue");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'QuizPage',
+  components: {
+    Toast: _components_partials_Toast__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   mounted: function mounted() {
     this.fetchQuestions();
   },
   data: function data() {
     return {
       questions: [],
-      current_question: 0
+      current_question: 0,
+      alert: {
+        show: false,
+        title: '',
+        message: ''
+      }
     };
   },
   methods: {
@@ -221,15 +231,34 @@ __webpack_require__.r(__webpack_exports__);
       _services_QuestionService_js__WEBPACK_IMPORTED_MODULE_0__["default"].index().then(function (response) {
         console.log(response);
         _this.questions = response.data.questions;
+        _this.questions.forEach(function (ques) {
+          console.log(ques);
+          ques['option_selected'] = '';
+        });
       }, function (error) {
         console.log(error);
       });
+    },
+    showAlert: function showAlert(message) {
+      var _this2 = this;
+      var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3000;
+      this.alert.show = true;
+      this.alert.title = message;
+      setTimeout(function () {
+        _this2.alert.show = false;
+      }, time);
     },
     showPrevQues: function showPrevQues() {
       this.current_question = this.current_question - 1;
     },
     showNextQues: function showNextQues() {
+      if (!this.questions[this.current_question]['option_selected']) {
+        this.showAlert("Please answer the current question before going to the next one.");
+        return;
+      }
       this.current_question = this.current_question + 1;
+      this.questions[this.current_question]['option_selected'] = '';
+      console.log(this.questions);
     }
   }
 });
@@ -860,13 +889,26 @@ var render = function render() {
   }, [_c("label", {
     staticClass: "rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.questions[_vm.current_question].option_selected,
+      expression: "questions[current_question].option_selected"
+    }],
     staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
     attrs: {
       type: "radio",
-      name: "privacy-setting",
-      value: "Public access",
+      value: "option_A",
       "aria-labelledby": "privacy-setting-0-label",
       "aria-describedby": "privacy-setting-0-description"
+    },
+    domProps: {
+      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_A")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_A");
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "ml-3 flex flex-col"
@@ -878,13 +920,26 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_A))])])]), _vm._v(" "), _c("label", {
     staticClass: "relative border p-4 flex cursor-pointer focus:outline-none"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.questions[_vm.current_question].option_selected,
+      expression: "questions[current_question].option_selected"
+    }],
     staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
     attrs: {
       type: "radio",
-      name: "privacy-setting",
-      value: "Private to Project Members",
+      value: "option_B",
       "aria-labelledby": "privacy-setting-1-label",
       "aria-describedby": "privacy-setting-1-description"
+    },
+    domProps: {
+      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_B")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_B");
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "ml-3 flex flex-col"
@@ -896,13 +951,26 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_B))])])]), _vm._v(" "), _c("label", {
     staticClass: "rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.questions[_vm.current_question].option_selected,
+      expression: "questions[current_question].option_selected"
+    }],
     staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
     attrs: {
       type: "radio",
-      name: "privacy-setting",
-      value: "Private to you",
+      value: "option_C",
       "aria-labelledby": "privacy-setting-2-label",
       "aria-describedby": "privacy-setting-2-description"
+    },
+    domProps: {
+      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_C")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_C");
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "ml-3 flex flex-col"
@@ -914,13 +982,26 @@ var render = function render() {
   }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_C))])])]), _vm._v(" "), _c("label", {
     staticClass: "rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none"
   }, [_c("input", {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: _vm.questions[_vm.current_question].option_selected,
+      expression: "questions[current_question].option_selected"
+    }],
     staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
     attrs: {
       type: "radio",
-      name: "privacy-setting",
-      value: "Private to you",
+      value: "option_D",
       "aria-labelledby": "privacy-setting-2-label",
       "aria-describedby": "privacy-setting-2-description"
+    },
+    domProps: {
+      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_D")
+    },
+    on: {
+      change: function change($event) {
+        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_D");
+      }
     }
   }), _vm._v(" "), _c("span", {
     staticClass: "ml-3 flex flex-col"
@@ -961,7 +1042,18 @@ var render = function render() {
         return _vm.showNextQues();
       }
     }
-  }, [_vm._v("\n                    Submit\n                ")])]) : _vm._e()])])]);
+  }, [_vm._v("\n                    Submit\n                ")])]) : _vm._e()])]), _vm._v(" "), _c("Toast", {
+    attrs: {
+      show: _vm.alert.show,
+      title: _vm.alert.title,
+      message: _vm.alert.message
+    },
+    on: {
+      "toast-close": function toastClose($event) {
+        _vm.alert.show = false;
+      }
+    }
+  })], 1);
 };
 var staticRenderFns = [];
 render._withStripped = true;

@@ -21,7 +21,7 @@
                         <div class="-space-y-px rounded-md bg-white">
                             <!-- Checked: "bg-blue-50 border-blue-200 z-10", Not Checked: "border-gray-200" -->
                             <label class="rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none">
-                                <input type="radio" name="privacy-setting" value="Public access" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-0-label" aria-describedby="privacy-setting-0-description">
+                                <input type="radio" v-model="questions[current_question].option_selected" value="option_A" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-0-label" aria-describedby="privacy-setting-0-description">
                                 <span class="ml-3 flex flex-col">
                                 <!-- Checked: "text-blue-900", Not Checked: "text-gray-900" -->
                                 <span id="privacy-setting-0-label" class="block text-sm font-medium">{{questions[current_question].option_A}}</span>
@@ -30,7 +30,7 @@
 
                             <!-- Checked: "bg-blue-50 border-blue-200 z-10", Not Checked: "border-gray-200" -->
                             <label class="relative border p-4 flex cursor-pointer focus:outline-none">
-                                <input type="radio" name="privacy-setting" value="Private to Project Members" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-1-label" aria-describedby="privacy-setting-1-description">
+                                <input type="radio" v-model="questions[current_question].option_selected" value="option_B" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-1-label" aria-describedby="privacy-setting-1-description">
                                 <span class="ml-3 flex flex-col">
                                 <!-- Checked: "text-blue-900", Not Checked: "text-gray-900" -->
                                 <span id="privacy-setting-1-label" class="block text-sm font-medium">{{questions[current_question].option_B}}</span>
@@ -39,7 +39,7 @@
 
                             <!-- Checked: "bg-blue-50 border-blue-200 z-10", Not Checked: "border-gray-200" -->
                             <label class="rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none">
-                                <input type="radio" name="privacy-setting" value="Private to you" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-2-label" aria-describedby="privacy-setting-2-description">
+                                <input type="radio" v-model="questions[current_question].option_selected" value="option_C" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-2-label" aria-describedby="privacy-setting-2-description">
                                 <span class="ml-3 flex flex-col">
                                 <!-- Checked: "text-blue-900", Not Checked: "text-gray-900" -->
                                 <span id="privacy-setting-2-label" class="block text-sm font-medium">{{questions[current_question].option_C}}</span>
@@ -48,7 +48,7 @@
 
                             <!-- Checked: "bg-blue-50 border-blue-200 z-10", Not Checked: "border-gray-200" -->
                             <label class="rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none">
-                                <input type="radio" name="privacy-setting" value="Private to you" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-2-label" aria-describedby="privacy-setting-2-description">
+                                <input type="radio" v-model="questions[current_question].option_selected" value="option_D" class="mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500" aria-labelledby="privacy-setting-2-label" aria-describedby="privacy-setting-2-description">
                                 <span class="ml-3 flex flex-col">
                                 <!-- Checked: "text-blue-900", Not Checked: "text-gray-900" -->
                                 <span id="privacy-setting-2-label" class="block text-sm font-medium">{{questions[current_question].option_D}}</span>
@@ -79,24 +79,37 @@
                     </button>                
                 </div>                
             </div>
-
         </main>
-
+        <Toast 
+            :show="alert.show" 
+            :title="alert.title" 
+            :message="alert.message" 
+            @toast-close="alert.show = false"
+        ></Toast>        
     </div>
 </template>
 
 <script>
 import questionService from "@/services/QuestionService.js";
+import Toast from '@/components/partials/Toast';
 
 export default {
     name: 'QuizPage',
+    components: {
+        Toast
+    },
     mounted() {
         this.fetchQuestions();
     },
     data: () => {
         return {
             questions: [],
-            current_question : 0
+            current_question : 0,
+            alert: {
+                show: false,
+                title: '',
+                message: '',
+            }            
         };
     },
     methods: {
@@ -104,12 +117,24 @@ export default {
         fetchQuestions() {
             questionService.index()
                 .then((response) => {
-                        console.log(response);
+                        console.log(response);                        
                         this.questions = response.data.questions;
+                        this.questions.forEach(ques => {
+                            console.log(ques);
+                            ques['option_selected'] = '';
+                        });
                     },
                     (error) => {
                         console.log(error);
                     });
+        },
+
+        showAlert(message, time=3000) {
+            this.alert.show = true;
+            this.alert.title = message;
+            setTimeout(() => {
+                this.alert.show = false;
+            }, time);
         },
 
         showPrevQues() {
@@ -117,7 +142,14 @@ export default {
         },
 
         showNextQues() {
+            if(!this.questions[this.current_question]['option_selected'])
+            {
+                this.showAlert("Please answer the current question before going to the next one.");
+                return;
+            }
             this.current_question = this.current_question + 1;
+            this.questions[this.current_question]['option_selected'] = '';
+            console.log(this.questions);
         }
     }
 }
