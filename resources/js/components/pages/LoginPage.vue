@@ -17,7 +17,10 @@
                                         Email address
                                     </label>
                                     <div class="mt-1">
-                                        <input type="email" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <input type="email" v-model="form.email" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="mt-2 text-red-400 text-sm" v-if="form_errors.email">
+                                        {{form_errors.email.join(", ")}}
                                     </div>
                                 </div>
 
@@ -26,7 +29,13 @@
                                         Password
                                     </label>
                                     <div class="mt-1">
-                                        <input type="password" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <input type="password" v-model="form.password" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    </div>
+                                    <div class="mt-2 text-red-400 text-sm" v-if="form_errors.password">
+                                        {{form_errors.password.join(", ")}}
+                                    </div>
+                                    <div class="mt-2 text-red-400 text-sm" v-if="invalid_credentials">
+                                        Invalid Credentials
                                     </div>
                                 </div>
 
@@ -62,8 +71,59 @@
 </template>
 
 <script>
+import authService from "@/services/AuthService.js";
+import store from "../../store/index";
 
 export default {
-    name : 'LoginPage'
+    name : 'LoginPage',
+    data : () => {
+        return {
+            form : {
+            },
+            form_errors : {},
+            invalid_credentials : false,
+            alert: {
+                show: false,
+                title: '',
+                message: '',
+            },            
+        }
+    },
+    methods : {
+        login() {
+            this.clearErrors();
+            authService.login(this.form)
+            .then((response) => {
+                console.log(response);
+                store.commit('setAuthUser', response.data.user);
+                this.$router.push({'name' : 'dashboard'});
+            },
+            (error) => {
+                let message;
+                if(error.code == 422) {
+                    message = "Your form has errors.";
+                    this.form_errors = error.errors;
+                } else if (error.code == 400) {
+                    message = "Unable to login."
+                    this.invalid_credentials = true;
+                }
+                this.showAlert(message);
+            });
+        },
+        clearErrors() {
+            this.form_errors = {};
+            this.invalid_credentials = false;
+        },
+        goToRegister() {
+            this.$router.push({'name' : 'RegisterPage'});
+        },
+        showAlert(message, time=3000) {
+            this.alert.show = true;
+            this.alert.title = message;
+            setTimeout(() => {
+                this.alert.show = false;
+            }, time);
+        },        
+    }
 }
 </script>

@@ -2,6 +2,9 @@ import Vue from "vue";
 import Router from "vue-router";
 
 import LoginPage from '@/components/pages/LoginPage.vue';
+import RegisterPage from '@/components/pages/RegisterPage.vue';
+import Dashboard from '@/components/pages/Dashboard.vue';
+import AdminContainer from '@/components/containers/AdminContainer.vue';
 
 Vue.use(Router);
 
@@ -11,6 +14,24 @@ function configRoutes() {
       path: "/",
       name: "Login",
       component: LoginPage,
+    },
+    {
+      path: "/register",
+      name: "RegisterPage",
+      component: RegisterPage
+    },
+    {
+      path: "/",
+      redirect: "/home",
+      name: "admin",
+      component: AdminContainer,
+      children: [
+        {
+        path: "/dashboard",
+        name: "dashboard",
+        component: Dashboard
+        }
+      ]
     }
   ]
 }

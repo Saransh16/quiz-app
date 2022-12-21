@@ -15,7 +15,7 @@ const Base = {
                 break;
         }
 
-        baseUrl += "/api/" + version;
+        baseUrl += "/api/" ;
 
         return baseUrl.replace(/\/$/, "");
     }
@@ -23,9 +23,17 @@ const Base = {
 
 const API = {
     
+    register: () => {
+        return `${Base.apiUrl()}/register`;
+    },
+
     login: () => {
         return `${Base.apiUrl()}/login`;
-    }
+    },
+
+    logout: () => {
+        return `${Base.apiUrl()}/logout`;
+    },
 };
 
 export default API;
