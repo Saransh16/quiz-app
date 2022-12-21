@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 
+import QuizPage from '@/components/pages/QuizPage.vue'
 import LoginPage from '@/components/pages/LoginPage.vue';
 import RegisterPage from '@/components/pages/RegisterPage.vue';
 import Dashboard from '@/components/pages/Dashboard.vue';
@@ -19,6 +20,11 @@ function configRoutes() {
       path: "/register",
       name: "RegisterPage",
       component: RegisterPage
+    },
+    {
+      path: "/quiz",
+      name: "QuizPage",
+      component: QuizPage
     },
     {
       path: "/",

@@ -32,7 +32,7 @@
                         No data will be collected on the website regarding your responses or how many times you take the quiz.                    
                     </li>
                     <div class="mt-16 text-center">
-                        <button type="button" class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        <button @click="startQuiz()" type="button" class="inline-flex items-center rounded-md border border-transparent bg-green-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
                             Start Quiz
                         </button>
                     </div>                    
@@ -74,7 +74,9 @@ export default {
         };
     },
     methods: {
-     
+        startQuiz() {
+            this.$router.push({'name' : 'QuizPage'});
+        }
     }
 };
 </script>
