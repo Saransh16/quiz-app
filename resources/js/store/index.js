@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     accessToken: '',
-    authUser : {}
+    authUser : {},
+    questions : []
   },
   mutations : {
     setAuthUser(state, payload) {
@@ -16,6 +17,9 @@ export default new Vuex.Store({
     setAccessToken(state, payload) {
       state.accessToken = payload;
     },
+    setQuestions(state, payload) {
+      state.questions = payload;
+    }
   },
   getters: {
     getAuthUser(state, getters) {
@@ -24,6 +28,9 @@ export default new Vuex.Store({
     getAccessToken(state, getters) {
       return state.accessToken;
     },
+    getQuestions(state, getters) {
+      return state.questions;
+    }
   },
-  plugins: [createPersistedState({paths: ['authUser', 'accessToken']})]
+  plugins: [createPersistedState({paths: ['authUser', 'accessToken', 'questions']})]
 })

@@ -209,10 +209,18 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.fetchQuestions();
   },
+  data: function data() {
+    return {
+      questions: [],
+      current_question: 0
+    };
+  },
   methods: {
     fetchQuestions: function fetchQuestions() {
+      var _this = this;
       _services_QuestionService_js__WEBPACK_IMPORTED_MODULE_0__["default"].index().then(function (response) {
         console.log(response);
+        _this.questions = response.data.questions;
       }, function (error) {
         console.log(error);
       });
@@ -818,9 +826,117 @@ __webpack_require__.r(__webpack_exports__);
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c("div", [_vm._v("\n    I am here in quiz page\n")]);
+  return _c("div", {
+    staticClass: "max-h-screen flex flex-col flex-1 mt-12 mx-24 overflow-y-scroll"
+  }, [_c("main", {
+    staticClass: "flex-1 relative z-0 overflow-y-scroll pt-2 pb-6 focus:outline-none md:py-6",
+    attrs: {
+      tabindex: "0"
+    }
+  }, [_c("div", {
+    staticClass: "flex justify-between"
+  }, [_c("div", {
+    staticClass: "flex-1"
+  }, [_c("h1", {
+    staticClass: "text-2xl font-semibold text-gray-900"
+  }, [_vm._v("Question " + _vm._s(_vm.current_question + 1))])])]), _vm._v(" "), _c("div", {
+    staticClass: "mt-2 mx-auto px-4 sm:px-6 md:px-8 border border-gray-300"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "mt-8"
+  }, [_c("div", {
+    staticClass: "text-xl font-semibold text-gray-800"
+  }, [_vm._v("\n                " + _vm._s(_vm.questions[_vm.current_question].text) + "\n            ")]), _vm._v(" "), _c("div", {
+    staticClass: "mt-6"
+  }, [_c("fieldset", [_c("legend", {
+    staticClass: "sr-only"
+  }, [_vm._v("Questions")]), _vm._v(" "), _c("div", {
+    staticClass: "-space-y-px rounded-md bg-white"
+  }, [_c("label", {
+    staticClass: "rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none"
+  }, [_c("input", {
+    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
+    attrs: {
+      type: "radio",
+      name: "privacy-setting",
+      value: "Public access",
+      "aria-labelledby": "privacy-setting-0-label",
+      "aria-describedby": "privacy-setting-0-description"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "ml-3 flex flex-col"
+  }, [_c("span", {
+    staticClass: "block text-sm font-medium",
+    attrs: {
+      id: "privacy-setting-0-label"
+    }
+  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_A))])])]), _vm._v(" "), _c("label", {
+    staticClass: "relative border p-4 flex cursor-pointer focus:outline-none"
+  }, [_c("input", {
+    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
+    attrs: {
+      type: "radio",
+      name: "privacy-setting",
+      value: "Private to Project Members",
+      "aria-labelledby": "privacy-setting-1-label",
+      "aria-describedby": "privacy-setting-1-description"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "ml-3 flex flex-col"
+  }, [_c("span", {
+    staticClass: "block text-sm font-medium",
+    attrs: {
+      id: "privacy-setting-1-label"
+    }
+  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_B))])])]), _vm._v(" "), _c("label", {
+    staticClass: "rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none"
+  }, [_c("input", {
+    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
+    attrs: {
+      type: "radio",
+      name: "privacy-setting",
+      value: "Private to you",
+      "aria-labelledby": "privacy-setting-2-label",
+      "aria-describedby": "privacy-setting-2-description"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "ml-3 flex flex-col"
+  }, [_c("span", {
+    staticClass: "block text-sm font-medium",
+    attrs: {
+      id: "privacy-setting-2-label"
+    }
+  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_C))])])]), _vm._v(" "), _c("label", {
+    staticClass: "rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none"
+  }, [_c("input", {
+    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
+    attrs: {
+      type: "radio",
+      name: "privacy-setting",
+      value: "Private to you",
+      "aria-labelledby": "privacy-setting-2-label",
+      "aria-describedby": "privacy-setting-2-description"
+    }
+  }), _vm._v(" "), _c("span", {
+    staticClass: "ml-3 flex flex-col"
+  }, [_c("span", {
+    staticClass: "block text-sm font-medium",
+    attrs: {
+      id: "privacy-setting-2-label"
+    }
+  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_D))])])])])])])]), _vm._v(" "), _vm._m(0)])]);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "mt-16 flex justify-end"
+  }, [_c("button", {
+    staticClass: "mr-1 inline-flex items-center rounded-md border border-transparent bg-green-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2",
+    attrs: {
+      type: "button"
+    }
+  }, [_vm._v("\n                Next\n            ")])]);
+}];
 render._withStripped = true;
 
 
@@ -1562,7 +1678,8 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2_
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
     accessToken: '',
-    authUser: {}
+    authUser: {},
+    questions: []
   },
   mutations: {
     setAuthUser: function setAuthUser(state, payload) {
@@ -1570,6 +1687,9 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2_
     },
     setAccessToken: function setAccessToken(state, payload) {
       state.accessToken = payload;
+    },
+    setQuestions: function setQuestions(state, payload) {
+      state.questions = payload;
     }
   },
   getters: {
@@ -1578,10 +1698,13 @@ vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2_
     },
     getAccessToken: function getAccessToken(state, getters) {
       return state.accessToken;
+    },
+    getQuestions: function getQuestions(state, getters) {
+      return state.questions;
     }
   },
   plugins: [(0,vuex_persistedstate__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    paths: ['authUser', 'accessToken']
+    paths: ['authUser', 'accessToken', 'questions']
   })]
 }));
 
