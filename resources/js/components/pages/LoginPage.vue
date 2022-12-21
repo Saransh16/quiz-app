@@ -96,6 +96,7 @@ export default {
             .then((response) => {
                 console.log(response);
                 store.commit('setAuthUser', response.data.user);
+                this.$store.commit('setAccessToken', response.data.access_token);
                 this.$router.push({'name' : 'dashboard'});
             },
             (error) => {
@@ -110,13 +111,16 @@ export default {
                 this.showAlert(message);
             });
         },
+
         clearErrors() {
             this.form_errors = {};
             this.invalid_credentials = false;
         },
+
         goToRegister() {
             this.$router.push({'name' : 'RegisterPage'});
         },
+        
         showAlert(message, time=3000) {
             this.alert.show = true;
             this.alert.title = message;

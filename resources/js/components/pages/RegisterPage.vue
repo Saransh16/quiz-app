@@ -124,9 +124,10 @@ export default {
         register() {
             this.form_errors = {};
             authService.register(this.form)
-            .then((res) => {
-                console.log(res);
-                this.$store.commit('setAuthUser', res.data.user);
+            .then((response) => {
+                console.log(response);
+                this.$store.commit('setAuthUser', response.data.user);
+                this.$store.commit('setAccessToken', response.data.access_token);
                 this.$router.push({'name' : 'dashboard'});
             },
             (error) => {
@@ -140,13 +141,15 @@ export default {
             });
 
         },
+        
         showAlert(message, time=3000) {
             this.alert.show = true;
             this.alert.title = message;
             setTimeout(() => {
                 this.alert.show = false;
             }, time);
-        },          
+        },
+
         goToLogin() {
             this.$router.push({'name' : 'LoginPage'});
         }

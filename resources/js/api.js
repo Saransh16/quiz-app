@@ -31,6 +31,10 @@ const API = {
         return `${Base.apiUrl()}/login`;
     },
 
+    fetchQuestions: () => {
+        return `${Base.apiUrl()}/questions`;
+    },
+
     logout: () => {
         return `${Base.apiUrl()}/logout`;
     },

@@ -1,4 +1,12 @@
+import store from "../store/index";
+
 const BaseService = {
+
+    getAuthHeaders() {
+        return {
+            Authorization: 'Bearer ' + store.state.accessToken
+        };
+    },
 
     handleError(error) {
         let response = error.response;

@@ -152,6 +152,7 @@ __webpack_require__.r(__webpack_exports__);
       _services_AuthService_js__WEBPACK_IMPORTED_MODULE_0__["default"].login(this.form).then(function (response) {
         console.log(response);
         _store_index__WEBPACK_IMPORTED_MODULE_1__["default"].commit('setAuthUser', response.data.user);
+        _this.$store.commit('setAccessToken', response.data.access_token);
         _this.$router.push({
           'name': 'dashboard'
         });
@@ -201,8 +202,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _services_QuestionService_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/services/QuestionService.js */ "./resources/js/services/QuestionService.js");
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  name: 'QuizPage'
+  name: 'QuizPage',
+  mounted: function mounted() {
+    this.fetchQuestions();
+  },
+  methods: {
+    fetchQuestions: function fetchQuestions() {
+      _services_QuestionService_js__WEBPACK_IMPORTED_MODULE_0__["default"].index().then(function (response) {
+        console.log(response);
+      }, function (error) {
+        console.log(error);
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -244,9 +259,10 @@ __webpack_require__.r(__webpack_exports__);
     register: function register() {
       var _this = this;
       this.form_errors = {};
-      _services_AuthService_js__WEBPACK_IMPORTED_MODULE_0__["default"].register(this.form).then(function (res) {
-        console.log(res);
-        _this.$store.commit('setAuthUser', res.data.user);
+      _services_AuthService_js__WEBPACK_IMPORTED_MODULE_0__["default"].register(this.form).then(function (response) {
+        console.log(response);
+        _this.$store.commit('setAuthUser', response.data.user);
+        _this.$store.commit('setAccessToken', response.data.access_token);
         _this.$router.push({
           'name': 'dashboard'
         });
@@ -1258,6 +1274,9 @@ var API = {
   login: function login() {
     return "".concat(Base.apiUrl(), "/login");
   },
+  fetchQuestions: function fetchQuestions() {
+    return "".concat(Base.apiUrl(), "/questions");
+  },
   logout: function logout() {
     return "".concat(Base.apiUrl(), "/logout");
   }
@@ -1461,7 +1480,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/index */ "./resources/js/store/index.js");
+
 var BaseService = {
+  getAuthHeaders: function getAuthHeaders() {
+    return {
+      Authorization: 'Bearer ' + _store_index__WEBPACK_IMPORTED_MODULE_0__["default"].state.accessToken
+    };
+  },
   handleError: function handleError(error) {
     var response = error.response;
     if (response && response.status) {
@@ -1479,6 +1505,39 @@ var BaseService = {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (BaseService);
+
+/***/ }),
+
+/***/ "./resources/js/services/QuestionService.js":
+/*!**************************************************!*\
+  !*** ./resources/js/services/QuestionService.js ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../api.js */ "./resources/js/api.js");
+/* harmony import */ var _BaseService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BaseService */ "./resources/js/services/BaseService.js");
+
+
+var QuestionService = {
+  index: function index() {
+    return new Promise(function (res, rej) {
+      axios.get(_api_js__WEBPACK_IMPORTED_MODULE_0__["default"].fetchQuestions(), {
+        headers: _BaseService__WEBPACK_IMPORTED_MODULE_1__["default"].getAuthHeaders()
+      }).then(function (response) {
+        return res(response.data);
+      }, function (error) {
+        _BaseService__WEBPACK_IMPORTED_MODULE_1__["default"].handleError(error);
+        return rej(error.response.data);
+      });
+    });
+  }
+};
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (QuestionService);
 
 /***/ }),
 
@@ -1502,21 +1561,27 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   state: {
+    accessToken: '',
     authUser: {}
   },
   mutations: {
     setAuthUser: function setAuthUser(state, payload) {
-      console.log("payload :", payload);
       state.authUser = payload;
+    },
+    setAccessToken: function setAccessToken(state, payload) {
+      state.accessToken = payload;
     }
   },
   getters: {
     getAuthUser: function getAuthUser(state, getters) {
       return state.authUser;
+    },
+    getAccessToken: function getAccessToken(state, getters) {
+      return state.accessToken;
     }
   },
   plugins: [(0,vuex_persistedstate__WEBPACK_IMPORTED_MODULE_0__["default"])({
-    paths: ['authUser']
+    paths: ['authUser', 'accessToken']
   })]
 }));
 
