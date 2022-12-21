@@ -224,6 +224,12 @@ __webpack_require__.r(__webpack_exports__);
       }, function (error) {
         console.log(error);
       });
+    },
+    showPrevQues: function showPrevQues() {
+      this.current_question = this.current_question - 1;
+    },
+    showNextQues: function showNextQues() {
+      this.current_question = this.current_question + 1;
     }
   }
 });
@@ -923,20 +929,41 @@ var render = function render() {
     attrs: {
       id: "privacy-setting-2-label"
     }
-  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_D))])])])])])])]), _vm._v(" "), _vm._m(0)])]);
-};
-var staticRenderFns = [function () {
-  var _vm = this,
-    _c = _vm._self._c;
-  return _c("div", {
-    staticClass: "mt-16 flex justify-end"
-  }, [_c("button", {
+  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_D))])])])])])])]), _vm._v(" "), _c("div", {
+    staticClass: "mt-16 flex justify-between"
+  }, [_c("div", [_vm.current_question != 0 ? _c("button", {
+    staticClass: "ml-1 inline-flex items-center rounded-md border border-transparent bg-purple-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.showPrevQues();
+      }
+    }
+  }, [_vm._v("\n                    Previous\n                ")]) : _vm._e()]), _vm._v(" "), _vm.current_question != _vm.questions.length - 1 ? _c("div", [_c("button", {
+    staticClass: "mr-1 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
+    attrs: {
+      type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.showNextQues();
+      }
+    }
+  }, [_vm._v("\n                    Next\n                ")])]) : _vm._e(), _vm._v(" "), _vm.current_question == _vm.questions.length - 1 ? _c("div", [_c("button", {
     staticClass: "mr-1 inline-flex items-center rounded-md border border-transparent bg-green-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2",
     attrs: {
       type: "button"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.showNextQues();
+      }
     }
-  }, [_vm._v("\n                Next\n            ")])]);
-}];
+  }, [_vm._v("\n                    Submit\n                ")])]) : _vm._e()])])]);
+};
+var staticRenderFns = [];
 render._withStripped = true;
 
 

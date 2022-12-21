@@ -59,10 +59,25 @@
                 </div>
             </div>
 
-            <div class="mt-16 flex justify-end">
-                <button type="button" class="mr-1 inline-flex items-center rounded-md border border-transparent bg-green-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
-                    Next
-                </button>                
+            <div class="mt-16 flex justify-between">
+
+                <div>
+                    <button v-if="current_question != 0" @click="showPrevQues()" type="button" class="ml-1 inline-flex items-center rounded-md border border-transparent bg-purple-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2">
+                        Previous
+                    </button>                
+                </div>
+
+                <div v-if="current_question != (questions.length - 1)">
+                    <button @click="showNextQues()" type="button" class="mr-1 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Next
+                    </button>                
+                </div>
+
+                <div v-if="current_question == (questions.length - 1)">
+                    <button @click="showNextQues()" type="button" class="mr-1 inline-flex items-center rounded-md border border-transparent bg-green-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2">
+                        Submit
+                    </button>                
+                </div>                
             </div>
 
         </main>
@@ -95,6 +110,14 @@ export default {
                     (error) => {
                         console.log(error);
                     });
+        },
+
+        showPrevQues() {
+            this.current_question = this.current_question - 1;
+        },
+
+        showNextQues() {
+            this.current_question = this.current_question + 1;
         }
     }
 }
