@@ -13,14 +13,14 @@
                         <div class="mt-6">
                             <form @submit.prevent="login()" class="space-y-6 text-gray-700">                                                        
                                 <div class="space-y-1">
-                                    <label for="email" class="block text-sm font-normal text-gray-700">
-                                        Email address
+                                    <label class="block text-sm font-normal text-gray-700">
+                                        Enter email address or username
                                     </label>
                                     <div class="mt-1">
-                                        <input type="email" v-model="form.email" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                        <input type="text" v-model="form.login" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     </div>
-                                    <div class="mt-2 text-red-400 text-sm" v-if="form_errors.email">
-                                        {{form_errors.email.join(", ")}}
+                                    <div class="mt-2 text-red-400 text-sm" v-if="form_errors.login">
+                                        {{form_errors.login.join(", ")}}
                                     </div>
                                 </div>
 

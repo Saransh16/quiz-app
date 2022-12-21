@@ -643,35 +643,32 @@ var render = function render() {
   }, [_c("div", {
     staticClass: "space-y-1"
   }, [_c("label", {
-    staticClass: "block text-sm font-normal text-gray-700",
-    attrs: {
-      "for": "email"
-    }
-  }, [_vm._v("\n                                    Email address\n                                ")]), _vm._v(" "), _c("div", {
+    staticClass: "block text-sm font-normal text-gray-700"
+  }, [_vm._v("\n                                    Enter email address or username\n                                ")]), _vm._v(" "), _c("div", {
     staticClass: "mt-1"
   }, [_c("input", {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: _vm.form.email,
-      expression: "form.email"
+      value: _vm.form.login,
+      expression: "form.login"
     }],
     staticClass: "appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm",
     attrs: {
-      type: "email"
+      type: "text"
     },
     domProps: {
-      value: _vm.form.email
+      value: _vm.form.login
     },
     on: {
       input: function input($event) {
         if ($event.target.composing) return;
-        _vm.$set(_vm.form, "email", $event.target.value);
+        _vm.$set(_vm.form, "login", $event.target.value);
       }
     }
-  })]), _vm._v(" "), _vm.form_errors.email ? _c("div", {
+  })]), _vm._v(" "), _vm.form_errors.login ? _c("div", {
     staticClass: "mt-2 text-red-400 text-sm"
-  }, [_vm._v("\n                                    " + _vm._s(_vm.form_errors.email.join(", ")) + "\n                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                                    " + _vm._s(_vm.form_errors.login.join(", ")) + "\n                                ")]) : _vm._e()]), _vm._v(" "), _c("div", {
     staticClass: "space-y-1"
   }, [_c("label", {
     staticClass: "block text-sm font-normal text-gray-700",
