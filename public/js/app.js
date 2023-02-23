@@ -222,7 +222,8 @@ __webpack_require__.r(__webpack_exports__);
         show: false,
         title: '',
         message: ''
-      }
+      },
+      show_result: false
     };
   },
   methods: {
@@ -252,13 +253,24 @@ __webpack_require__.r(__webpack_exports__);
       this.current_question = this.current_question - 1;
     },
     showNextQues: function showNextQues() {
-      if (!this.questions[this.current_question]['option_selected']) {
-        this.showAlert("Please answer the current question before going to the next one.");
-        return;
-      }
+      // if(!this.questions[this.current_question]['option_selected'])
+      // {
+      //     this.showAlert("Please answer the current question before going to the next one.");
+      //     return;
+      // }
       this.current_question = this.current_question + 1;
       this.questions[this.current_question]['option_selected'] = '';
       console.log(this.questions);
+    },
+    showResult: function showResult() {
+      this.show_result = true;
+    },
+    valueSelected: function valueSelected(value, index) {
+      console.log(value);
+      console.log(index);
+    },
+    dashboard: function dashboard() {
+      this.$router.push('/dashboard');
     }
   }
 });
@@ -868,7 +880,28 @@ var render = function render() {
     attrs: {
       tabindex: "0"
     }
+  }, [_vm.show_result ? _c("div", [_vm._m(0), _vm._v(" "), _c("div", {
+    staticClass: "mt-2 mx-auto px-4 sm:px-6 md:px-8 border border-gray-300"
+  }), _vm._v(" "), _c("div", {
+    staticClass: "bg-white py-24 px-6 sm:py-32 lg:px-8"
   }, [_c("div", {
+    staticClass: "mx-auto max-w-2xl text-center"
+  }, [_c("p", {
+    staticClass: "text-base font-semibold leading-7 text-indigo-600"
+  }, [_vm._v("You have scored")]), _vm._v(" "), _c("h3", {
+    staticClass: "mt-2 text-2xl font-bold tracking-tight text-gray-900 sm:text-6xl"
+  }, [_vm._v("5")]), _vm._v(" "), _c("p", {
+    staticClass: "mt-6"
+  }, [_c("a", {
+    attrs: {
+      href: "javascript:void(0)"
+    },
+    on: {
+      click: function click($event) {
+        return _vm.dashboard();
+      }
+    }
+  }, [_vm._v("Go to dashboard")])])])])]) : _vm._e(), _vm._v(" "), !_vm.show_result ? _c("div", [_c("div", {
     staticClass: "flex justify-between"
   }, [_c("div", {
     staticClass: "flex-1"
@@ -880,137 +913,49 @@ var render = function render() {
     staticClass: "mt-8"
   }, [_c("div", {
     staticClass: "text-xl font-semibold text-gray-800"
-  }, [_vm._v("\n                " + _vm._s(_vm.questions[_vm.current_question].text) + "\n            ")]), _vm._v(" "), _c("div", {
+  }, [_vm._v("\n                    " + _vm._s(_vm.questions[_vm.current_question].text) + "\n                ")]), _vm._v(" "), _c("div", {
     staticClass: "mt-6"
   }, [_c("fieldset", [_c("legend", {
     staticClass: "sr-only"
   }, [_vm._v("Questions")]), _vm._v(" "), _c("div", {
     staticClass: "-space-y-px rounded-md bg-white"
-  }, [_c("label", {
-    staticClass: "rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.questions[_vm.current_question].option_selected,
-      expression: "questions[current_question].option_selected"
-    }],
-    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
-    attrs: {
-      type: "radio",
-      value: "option_A",
-      "aria-labelledby": "privacy-setting-0-label",
-      "aria-describedby": "privacy-setting-0-description"
-    },
-    domProps: {
-      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_A")
-    },
-    on: {
-      change: function change($event) {
-        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_A");
+  }, _vm._l(_vm.questions[_vm.current_question].choices, function (choice, index) {
+    return _c("div", {
+      key: index
+    }, [_c("label", {
+      staticClass: "rounded-tl-md rounded-tr-md relative border p-4 flex cursor-pointer focus:outline-none"
+    }, [_c("input", {
+      directives: [{
+        name: "model",
+        rawName: "v-model",
+        value: _vm.questions[_vm.current_question].option_selected,
+        expression: "questions[current_question].option_selected"
+      }],
+      staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
+      attrs: {
+        type: "radio",
+        "aria-labelledby": "privacy-setting-0-label",
+        "aria-describedby": "privacy-setting-0-description"
+      },
+      domProps: {
+        checked: _vm._q(_vm.questions[_vm.current_question].option_selected, null)
+      },
+      on: {
+        change: [function ($event) {
+          return _vm.$set(_vm.questions[_vm.current_question], "option_selected", null);
+        }, function ($event) {
+          return _vm.valueSelected(index);
+        }]
       }
-    }
-  }), _vm._v(" "), _c("span", {
-    staticClass: "ml-3 flex flex-col"
-  }, [_c("span", {
-    staticClass: "block text-sm font-medium",
-    attrs: {
-      id: "privacy-setting-0-label"
-    }
-  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_A))])])]), _vm._v(" "), _c("label", {
-    staticClass: "relative border p-4 flex cursor-pointer focus:outline-none"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.questions[_vm.current_question].option_selected,
-      expression: "questions[current_question].option_selected"
-    }],
-    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
-    attrs: {
-      type: "radio",
-      value: "option_B",
-      "aria-labelledby": "privacy-setting-1-label",
-      "aria-describedby": "privacy-setting-1-description"
-    },
-    domProps: {
-      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_B")
-    },
-    on: {
-      change: function change($event) {
-        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_B");
+    }), _vm._v(" "), _c("span", {
+      staticClass: "ml-3 flex flex-col"
+    }, [_c("span", {
+      staticClass: "block text-sm font-medium",
+      attrs: {
+        id: "privacy-setting-0-label"
       }
-    }
-  }), _vm._v(" "), _c("span", {
-    staticClass: "ml-3 flex flex-col"
-  }, [_c("span", {
-    staticClass: "block text-sm font-medium",
-    attrs: {
-      id: "privacy-setting-1-label"
-    }
-  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_B))])])]), _vm._v(" "), _c("label", {
-    staticClass: "rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.questions[_vm.current_question].option_selected,
-      expression: "questions[current_question].option_selected"
-    }],
-    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
-    attrs: {
-      type: "radio",
-      value: "option_C",
-      "aria-labelledby": "privacy-setting-2-label",
-      "aria-describedby": "privacy-setting-2-description"
-    },
-    domProps: {
-      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_C")
-    },
-    on: {
-      change: function change($event) {
-        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_C");
-      }
-    }
-  }), _vm._v(" "), _c("span", {
-    staticClass: "ml-3 flex flex-col"
-  }, [_c("span", {
-    staticClass: "block text-sm font-medium",
-    attrs: {
-      id: "privacy-setting-2-label"
-    }
-  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_C))])])]), _vm._v(" "), _c("label", {
-    staticClass: "rounded-bl-md rounded-br-md relative border p-4 flex cursor-pointer focus:outline-none"
-  }, [_c("input", {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: _vm.questions[_vm.current_question].option_selected,
-      expression: "questions[current_question].option_selected"
-    }],
-    staticClass: "mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-blue-600 border-gray-300 focus:ring-blue-500",
-    attrs: {
-      type: "radio",
-      value: "option_D",
-      "aria-labelledby": "privacy-setting-2-label",
-      "aria-describedby": "privacy-setting-2-description"
-    },
-    domProps: {
-      checked: _vm._q(_vm.questions[_vm.current_question].option_selected, "option_D")
-    },
-    on: {
-      change: function change($event) {
-        return _vm.$set(_vm.questions[_vm.current_question], "option_selected", "option_D");
-      }
-    }
-  }), _vm._v(" "), _c("span", {
-    staticClass: "ml-3 flex flex-col"
-  }, [_c("span", {
-    staticClass: "block text-sm font-medium",
-    attrs: {
-      id: "privacy-setting-2-label"
-    }
-  }, [_vm._v(_vm._s(_vm.questions[_vm.current_question].option_D))])])])])])])]), _vm._v(" "), _c("div", {
+    }, [_vm._v(_vm._s(choice))])])])]);
+  }), 0)])])]), _vm._v(" "), _c("div", {
     staticClass: "mt-16 flex justify-between"
   }, [_c("div", [_vm.current_question != 0 ? _c("button", {
     staticClass: "ml-1 inline-flex items-center rounded-md border border-transparent bg-purple-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2",
@@ -1022,7 +967,7 @@ var render = function render() {
         return _vm.showPrevQues();
       }
     }
-  }, [_vm._v("\n                    Previous\n                ")]) : _vm._e()]), _vm._v(" "), _vm.current_question != _vm.questions.length - 1 ? _c("div", [_c("button", {
+  }, [_vm._v("\n                        Previous\n                    ")]) : _vm._e()]), _vm._v(" "), _vm.current_question != _vm.questions.length - 1 ? _c("div", [_c("button", {
     staticClass: "mr-1 inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2",
     attrs: {
       type: "button"
@@ -1032,17 +977,17 @@ var render = function render() {
         return _vm.showNextQues();
       }
     }
-  }, [_vm._v("\n                    Next\n                ")])]) : _vm._e(), _vm._v(" "), _vm.current_question == _vm.questions.length - 1 ? _c("div", [_c("button", {
+  }, [_vm._v("\n                        Next\n                    ")])]) : _vm._e(), _vm._v(" "), _vm.current_question == _vm.questions.length - 1 ? _c("div", [_c("button", {
     staticClass: "mr-1 inline-flex items-center rounded-md border border-transparent bg-green-600 px-3 py-2 text-base font-medium text-white shadow-sm hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2",
     attrs: {
       type: "button"
     },
     on: {
       click: function click($event) {
-        return _vm.showNextQues();
+        return _vm.showResult();
       }
     }
-  }, [_vm._v("\n                    Submit\n                ")])]) : _vm._e()])]), _vm._v(" "), _c("Toast", {
+  }, [_vm._v("\n                        Submit\n                    ")])]) : _vm._e()])]) : _vm._e()]), _vm._v(" "), _c("Toast", {
     attrs: {
       show: _vm.alert.show,
       title: _vm.alert.title,
@@ -1055,7 +1000,17 @@ var render = function render() {
     }
   })], 1);
 };
-var staticRenderFns = [];
+var staticRenderFns = [function () {
+  var _vm = this,
+    _c = _vm._self._c;
+  return _c("div", {
+    staticClass: "flex justify-between"
+  }, [_c("div", {
+    staticClass: "flex-1"
+  }, [_c("h1", {
+    staticClass: "text-2xl font-semibold text-gray-900"
+  }, [_vm._v("Result")])])]);
+}];
 render._withStripped = true;
 
 
